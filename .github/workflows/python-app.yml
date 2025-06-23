@@ -107,8 +107,16 @@ jobs:
           cp -r allure-results-smoke/* merged-allure-results/ || true
           cp -r allure-results-sanity/* merged-allure-results/ || true
           cp -r allure-results-regression/* merged-allure-results/ || true
-      - name: List merged Allure results
-        run: ls -l merged-allure-results
+      - name: Download previous Allure history (if exists)
+        run: |
+          git fetch origin gh-pages
+          git checkout gh-pages -- history || true
+        continue-on-error: true
+      - name: Copy history to merged results
+        run: |
+          if [ -d history ]; then
+            cp -r history merged-allure-results/
+          fi
       - name: Generate Allure report
         run: |
           allure generate merged-allure-results --clean -o allure-report

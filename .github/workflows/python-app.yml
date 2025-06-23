@@ -127,20 +127,32 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
+
+      # Download the new report artifact
       - uses: actions/download-artifact@v4
         with:
           name: allure-report
           path: allure-report
+
+      # Download the previous gh-pages branch (if it exists)
       - name: Download previous Allure report (if exists)
         run: |
           git fetch origin gh-pages
-          git checkout gh-pages -- ./history || true
+          git checkout gh-pages -- history || true
         continue-on-error: true
+
+      # Copy the history folder into the new report
       - name: Copy history to new report
         run: |
           if [ -d history ]; then
             cp -r history allure-report/
           fi
+
+      # Ensure .nojekyll exists
+      - name: Ensure .nojekyll exists
+        run: touch allure-report/.nojekyll
+
+      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

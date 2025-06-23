@@ -28,6 +28,7 @@ jobs:
         with:
           name: allure-results-smoke
           path: allure-results-smoke
+          retention-days: 7
 
   sanity:
     runs-on: ubuntu-latest
@@ -49,6 +50,7 @@ jobs:
         with:
           name: allure-results-sanity
           path: allure-results-sanity
+          retention-days: 7
 
   regression:
     runs-on: ubuntu-latest
@@ -70,6 +72,7 @@ jobs:
         with:
           name: allure-results-regression
           path: allure-results-regression
+          retention-days: 7
 
   report:
     runs-on: ubuntu-latest
@@ -109,6 +112,7 @@ jobs:
         with:
           name: allure-report
           path: allure-report
+          retention-days: 7
 
   deploy:
     runs-on: ubuntu-latest
@@ -120,6 +124,16 @@ jobs:
         with:
           name: allure-report
           path: allure-report
+      - name: Download previous Allure report (if exists)
+        run: |
+          git fetch origin gh-pages
+          git checkout gh-pages -- ./history || true
+        continue-on-error: true
+      - name: Copy history to new report
+        run: |
+          if [ -d history ]; then
+            cp -r history allure-report/
+          fi
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

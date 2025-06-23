@@ -101,6 +101,16 @@ jobs:
           tar -xzf allure-2.27.0.tgz
           sudo mv allure-2.27.0 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+      - name: Download previous Allure report (if exists)
+        run: |
+          git fetch origin gh-pages
+          git checkout gh-pages -- allure-report || true
+        continue-on-error: true
+      - name: Copy history to merged results
+        run: |
+          if [ -d allure-report/history ]; then
+            cp -r allure-report/history merged-allure-results/
+          fi
       - name: Merge Allure results
         run: |
           mkdir merged-allure-results

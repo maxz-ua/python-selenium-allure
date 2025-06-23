@@ -113,6 +113,8 @@ jobs:
           name: allure-report
           path: allure-report
           retention-days: 7
+      - name: List Allure report contents
+        run: ls -R allure-report
 
   deploy:
     runs-on: ubuntu-latest

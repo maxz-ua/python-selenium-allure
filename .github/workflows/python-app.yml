@@ -82,14 +82,17 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: allure-results-smoke
+          path: allure-results-smoke
         continue-on-error: true
       - uses: actions/download-artifact@v4
         with:
           name: allure-results-sanity
+          path: allure-results-sanity
         continue-on-error: true
       - uses: actions/download-artifact@v4
         with:
           name: allure-results-regression
+          path: allure-results-regression
         continue-on-error: true
       - name: Install Allure CLI
         run: |

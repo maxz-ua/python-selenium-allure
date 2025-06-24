@@ -85,16 +85,19 @@ jobs:
           name: allure-results-smoke
           path: allure-results-smoke
         continue-on-error: true
+
       - uses: actions/download-artifact@v4
         with:
           name: allure-results-sanity
           path: allure-results-sanity
         continue-on-error: true
+
       - uses: actions/download-artifact@v4
         with:
           name: allure-results-regression
           path: allure-results-regression
         continue-on-error: true
+
       - name: Install Allure CLI
         run: |
           sudo apt-get update && sudo apt-get install -y default-jre
@@ -102,43 +105,39 @@ jobs:
           tar -xzf allure-2.27.0.tgz
           sudo mv allure-2.27.0 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
-      - name: Download previous Allure report (if exists)
+
+      - name: Checkout history from gh-pages
         run: |
           git fetch origin gh-pages
-          git checkout gh-pages -- allure-report || true
+          git checkout gh-pages -- history || true
         continue-on-error: true
-      - name: Copy history to merged results
-        run: |
-          if [ -d allure-report/history ]; then
-            cp -r allure-report/history merged-allure-results/
-          fi
+
+      - name: Prepare merged results directory
+        run: mkdir -p merged-allure-results
+
       - name: Merge Allure results
         run: |
           mkdir merged-allure-results
           cp -r allure-results-smoke/* merged-allure-results/ || true
           cp -r allure-results-sanity/* merged-allure-results/ || true
           cp -r allure-results-regression/* merged-allure-results/ || true
-      - name: Download previous Allure history (if exists)
-        run: |
-          git fetch origin gh-pages
-          git checkout gh-pages -- history || true
-        continue-on-error: true
-      - name: Copy history to merged results
+
+      - name: Copy history to merged results (if exists)
         run: |
           if [ -d history ]; then
-            cp -r history merged-allure-results/
+            cp -r history merged-allure-results/history || true
           fi
+
       - name: Generate Allure report
         run: |
           allure generate merged-allure-results --clean -o allure-report
+
       - name: Upload Allure HTML report
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report
           retention-days: 7
-      - name: List Allure report contents
-        run: ls -R allure-report
 
   deploy:
     runs-on: ubuntu-latest

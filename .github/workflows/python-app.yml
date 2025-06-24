@@ -117,7 +117,7 @@ jobs:
 
       - name: Merge Allure results
         run: |
-          mkdir merged-allure-results
+          mkdir -p merged-allure-results
           cp -r allure-results-smoke/* merged-allure-results/ || true
           cp -r allure-results-sanity/* merged-allure-results/ || true
           cp -r allure-results-regression/* merged-allure-results/ || true

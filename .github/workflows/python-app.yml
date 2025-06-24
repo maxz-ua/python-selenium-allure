@@ -106,11 +106,17 @@ jobs:
           sudo mv allure-2.27.0 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
-      - name: Checkout history from gh-pages
+      - name: Checkout gh-pages/history via worktree
         run: |
           git fetch origin gh-pages
-          git checkout gh-pages -- history || true
-        continue-on-error: true
+          git worktree add tmp-gh-pages origin/gh-pages
+          mkdir -p merged-allure-results
+          if [ -d tmp-gh-pages/history ]; then
+            cp -r tmp-gh-pages/history merged-allure-results/history
+          else
+            echo "No history folder in gh-pages"
+          fi
+        
 
       - name: Prepare merged results directory
         run: mkdir -p merged-allure-results
@@ -136,6 +142,9 @@ jobs:
 
       - name: generated history
         run: ls -lh allure-report/history || echo "No history generated"
+
+      - name: Remove Worktree
+        run: git worktree remove tmp-gh-pages --force
 
       - name: Upload Allure HTML report
         uses: actions/upload-artifact@v4

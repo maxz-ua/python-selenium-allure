@@ -1,0 +1,4 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Sat Jul 05 03:43:54 UTC 2025","Sat Jul 05 03:43:56 UTC 2025","1733","tests","test_google_search_regression","","","","test_google_search_box_exists",""
+"passed","Sat Jul 05 03:42:53 UTC 2025","Sat Jul 05 03:42:54 UTC 2025","632","tests","test_google_search_smoke","","","","test_google_search_box_exists",""
+"passed","Sat Jul 05 03:43:14 UTC 2025","Sat Jul 05 03:43:15 UTC 2025","643","tests","test_google_search_sanity","","","","test_google_search_box_exists",""

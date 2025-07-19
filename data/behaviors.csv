@@ -1,0 +1,4 @@
+"Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
+"","Google Sanity Search","Search box is present on homepage","0","0","1","0","0"
+"","Google Smoke Search","Search box is present on homepage","0","0","1","0","0"
+"","Google Regression Search","Search box is present on homepage","0","0","1","0","0"

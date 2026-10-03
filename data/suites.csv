@@ -1,0 +1,4 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Sat Oct 03 08:50:07 UTC 2026","Sat Oct 03 08:50:08 UTC 2026","937","tests","test_google_search_sanity","","","","test_google_search_box_exists",""
+"passed","Sat Oct 03 08:50:24 UTC 2026","Sat Oct 03 08:50:25 UTC 2026","762","tests","test_google_search_regression","","","","test_google_search_box_exists",""
+"passed","Sat Oct 03 08:49:44 UTC 2026","Sat Oct 03 08:49:44 UTC 2026","353","tests","test_google_search_smoke","","","","test_google_search_box_exists",""
